@@ -1,0 +1,10 @@
+{
+  "luau-lsp.sourcemap.rojoProjectFile": "default.project.json",
+  "luau-lsp.ignoreGlobs": [
+    "**/_Index/**",
+    "**/build/**"
+  ],
+  "files.associations": {
+    "*.luau": "lua"
+  }
+}
