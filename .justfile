@@ -6,21 +6,19 @@ project_dir := absolute_path("src")
 packages_dir := absolute_path("Packages")
 test_project := "test.project.json"
 
+tmpdir := `mktemp -d`
 global_defs_path := tmpdir / "globalTypes.d.lua"
 sourcemap_path := tmpdir / "sourcemap.json"
-tmpdir := `mktemp -d`
-
 
 default:
   @just --list
 
-build target="dev":
-	rojo build -o MatterTypes.rbxm
+build:
+	rojo build packages.project.json -o MatterReplication.rbxm
 
 lint:
 	selene {{ project_dir }}
 	stylua --check {{ project_dir }}
-
 
 wally-install:
 	wally install
