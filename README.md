@@ -70,6 +70,8 @@ return updateEntityIdAttributes
 
 Creates the replication system for use in your Matter loop.
 
+The system must be included in both the server and client loops for replication to work.
+
 ```lua
 local MatterReplication = require(ReplicatedStorage.Packages.MatterReplication)
 
@@ -89,7 +91,7 @@ return MatterReplication.createReplicationSystem({
 
 Get the client ID associated with a `ServerEntity`.
 
-The entity IDs sent to the client from the server are typically server IDs. This function As such, this function can be used to resolve a server ID to the client ID for an entity.
+The entity IDs sent to the client from the server are typically server IDs. As such, this function can be used to resolve a server ID to the client ID for an entity.
 
 For a non-replicated component there will not be a client ID to work with, so in those cases this function returns `nil`.
 
