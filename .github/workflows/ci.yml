@@ -20,6 +20,8 @@ jobs:
 
       - run: just init
       - run: just lint
+      - run: just build
+      - run: just build-example
 
   analyze:
     runs-on: ubuntu-latest

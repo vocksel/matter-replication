@@ -1,0 +1,15 @@
+{
+  "name": "MatterReplication Example",
+  "emitLegacyScripts": false,
+  "tree": {
+    "$className": "DataModel",
+    "ReplicatedStorage": {
+      "Packages": {
+        "$path": "../packages.project.json"
+      },
+      "Example": {
+        "$path": "src"
+      }
+    }
+  }
+}

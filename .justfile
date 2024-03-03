@@ -10,17 +10,18 @@ global_defs_path := tmpdir / "globalTypes.d.lua"
 sourcemap_path := tmpdir / "sourcemap.json"
 tmpdir := `mktemp -d`
 
-
 default:
   @just --list
 
-build target="dev":
+build:
 	rojo build -o MatterTypes.rbxm
+
+build-example:
+	rojo build example/default.project.json -o MatterReplicationExample.rbxl
 
 lint:
 	selene {{ project_dir }}
 	stylua --check {{ project_dir }}
-
 
 wally-install:
 	wally install

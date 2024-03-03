@@ -1,14 +1,10 @@
 {
   "name": "MatterReplication",
-  "emitLegacyScripts": false,
   "tree": {
     "$className": "DataModel",
     "ReplicatedStorage": {
       "Packages": {
-        "$path": "Packages",
-        "MatterReplication": {
-          "$path": "src"
-        }
+        "$path": "packages.project.json"
       }
     }
   }
