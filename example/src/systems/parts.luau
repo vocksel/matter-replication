@@ -55,22 +55,14 @@ local function parts(world)
 		local character = Players.LocalPlayer.Character
 
 		if character then
-			for id, model in world:query(Model, ServerEntity) do
-				-- The entity ID on the client can (and likely will) be
-				-- different than what's on the server. As such, resolveServerId
-				-- will take a client-side ID and map it to the ID the server
-				-- uses. Since the server doesn't know what the client's entity
-				-- IDs are, this is needed to tell the server _what_ part was
-				-- interacted with
-				local serverId = MatterReplication.resolveServerId(world, id)
-
+			for _, model, serverEntity in world:query(Model, ServerEntity) do
 				-- For illustrative purposes the client is the one listening for
 				-- Touched events. It would be easier to do this on the server,
 				-- but this is an easy way to show off user interaction causing
 				-- server reaction
 				for _, other: Part in Matter.useEvent(model.instance, "Touched") do
 					if other:IsDescendantOf(Players.LocalPlayer.Character) then
-						partInteracted:FireServer(serverId)
+						partInteracted:FireServer(serverEntity.id)
 					end
 				end
 			end
