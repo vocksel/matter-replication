@@ -43,6 +43,8 @@ local function createReplicationSystem(replicatedComponents: { Component })
 							id = id,
 						})
 					)
+
+					-- print(`[debug] assigned server ownership to entity {id}`)
 				end
 			end
 		end
@@ -68,6 +70,7 @@ local function createReplicationSystem(replicatedComponents: { Component })
 		end
 
 		if next(entityChanges) then
+			-- print("[debug] broadcasting entity changes:", entityChanges)
 			componentReplicated:FireAllClients(entityChanges)
 		end
 	end
@@ -92,6 +95,7 @@ local function createReplicationSystem(replicatedComponents: { Component })
 				payload[tostring(entityId)] = entityPayload
 			end
 
+			-- print("[debug] new player joined, catching them up with entity changes:", payload)
 			componentReplicated:FireClient(player, payload)
 		end
 	end
@@ -104,6 +108,7 @@ local function createReplicationSystem(replicatedComponents: { Component })
 				if clientEntityId and next(componentMap) == nil then
 					world:despawn(clientEntityId)
 					clientEntityIdMap[serverEntityId] = nil
+					-- print("[debug] despawned entity", clientEntityId)
 					continue
 				end
 
@@ -125,13 +130,16 @@ local function createReplicationSystem(replicatedComponents: { Component })
 				if clientEntityId == nil then
 					clientEntityId = world:spawn(table.unpack(componentsToInsert))
 					clientEntityIdMap[serverEntityId] = clientEntityId
+					-- print(`[debug] spawned entity {clientEntityId} with components:`, componentsToInsert)
 				else
 					if #componentsToInsert > 0 then
 						world:insert(clientEntityId, table.unpack(componentsToInsert))
+						-- print(`[debug] added components to entity {clientEntityId}:`, componentsToInsert)
 					end
 
 					if #componentsToRemove > 0 then
 						world:remove(clientEntityId, table.unpack(componentsToRemove))
+						-- print(`[debug] removed components from entity {clientEntityId}:`, componentsToInsert)
 					end
 				end
 			end
