@@ -2,11 +2,11 @@ local Root = script:FindFirstAncestor("Example")
 
 local RunService = game:GetService("RunService")
 
-local Matter = require(Root.Parent.Packages.Matter)
+local Matter = require(Root.Packages.Matter)
 
 local systems = {
 	require(Root.systems.replication),
-	require(Root.systems.updateEntityIdAttributes),
+	require(Root.systems.parts),
 }
 
 local world = Matter.World.new()

@@ -1,5 +1,5 @@
 local Root = script:FindFirstAncestor("Example")
 
-local Matter = require(Root.Parent.Packages.Matter)
+local Matter = require(Root.Packages.Matter)
 
 return Matter.component(script.Name)
