@@ -1,14 +1,12 @@
-local Root = script:FindFirstAncestor("MatterReplication")
-
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 
-local Freeze = require(Root.Parent.Freeze)
-local Matter = require(Root.Parent.Matter)
-local MatterTypes = require(Root.MatterTypes)
-local ServerEntity = require(Root.ServerEntity)
+local Freeze = require(script.Parent.Parent.Freeze)
+local Matter = require(script.Parent.Parent.Matter)
+local MatterTypes = require(script.Parent.MatterTypes)
+local ServerEntity = require(script.Parent.ServerEntity)
 
-local componentReplicated = Root.componentReplicated
+local componentReplicated = script.Parent.componentReplicated
 
 type World = MatterTypes.World
 type Component = MatterTypes.Component<any>

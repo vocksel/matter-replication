@@ -1,7 +1,5 @@
-local Root = script:FindFirstAncestor("MatterReplication")
-
-local MatterTypes = require(Root.MatterTypes)
-local ServerEntity = require(Root.ServerEntity)
+local MatterTypes = require(script.Parent.MatterTypes)
+local ServerEntity = require(script.Parent.ServerEntity)
 
 type World = MatterTypes.World
 
