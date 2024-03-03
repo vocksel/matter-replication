@@ -1,9 +1,9 @@
 # MatterReplication Example
 
-Minimal example using MatterReplication that will:
+Minimal example using MatterReplication that will will a ball every 5 seconds. This showcases:
 
-1. Assign a Model component to each Player
-2. Spawn a ball every 5 seconds
+1. Server ownership of entities
+2. Existing clients receive updates
 
 For both of these cases all entities and components are replicated to clients.
 

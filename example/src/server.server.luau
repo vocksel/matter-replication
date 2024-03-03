@@ -1,14 +1,12 @@
 local Root = script:FindFirstAncestor("Example")
 
-local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 
-local Matter = require(Root.Parent.Packages.Matter)
-local Model = require(Root.components.Model)
+local Matter = require(Root.Packages.Matter)
 
 local systems = {
 	require(Root.systems.replication),
-	require(Root.systems.partSpawner),
+	require(Root.systems.parts),
 }
 
 local world = Matter.World.new()
@@ -19,9 +17,3 @@ loop:scheduleSystems(systems)
 loop:begin({
 	default = RunService.Heartbeat,
 })
-
-Players.PlayerAdded:Connect(function(player)
-	world:spawn(Model({
-		instance = player,
-	}))
-end)

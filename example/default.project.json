@@ -4,10 +4,10 @@
   "tree": {
     "$className": "DataModel",
     "ReplicatedStorage": {
-      "Packages": {
-        "$path": "../packages.project.json"
-      },
       "Example": {
+        "Packages": {
+          "$path": "../packages.project.json"
+        },
         "$path": "src"
       }
     }

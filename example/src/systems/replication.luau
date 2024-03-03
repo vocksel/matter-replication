@@ -1,11 +1,11 @@
 local Root = script:FindFirstAncestor("Example")
 
-local MatterReplication = require(Root.Parent.Packages.MatterReplication)
+local MatterReplication = require(Root.Packages.MatterReplication)
 
 local Model = require(Root.components.Model)
 
 local REPLICATED_COMPONENTS = {
-	Model = Model,
+	Model,
 }
 
 return MatterReplication.createReplicationSystem(REPLICATED_COMPONENTS)
