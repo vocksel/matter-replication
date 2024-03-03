@@ -23,12 +23,13 @@ type EntityChanges = {
 	[string]: ComponentChanges,
 }
 
-local function createReplicationSystem(replicatedComponents: { [string]: Component })
+local function createReplicationSystem(replicatedComponents: { Component })
 	-- This table is used by the client to map server-side entity IDs to
 	-- client-side ones.
 	local clientEntityIdMap: { [string]: string } = {}
 
-	replicatedComponents = Freeze.Dictionary.set(replicatedComponents, "ServerEntity", ServerEntity)
+	replicatedComponents = table.clone(replicatedComponents)
+	table.insert(replicatedComponents, ServerEntity)
 
 	local function assignServerOwnership(world: World)
 		for _, component in replicatedComponents do
@@ -50,7 +51,7 @@ local function createReplicationSystem(replicatedComponents: { [string]: Compone
 	local function sendComponentChanges(world: World)
 		local entityChanges: EntityChanges = {}
 
-		for componentName, component in replicatedComponents do
+		for _, component in replicatedComponents do
 			for entityId, record in world:queryChanged(component) do
 				local key = tostring(entityId)
 
@@ -59,7 +60,7 @@ local function createReplicationSystem(replicatedComponents: { [string]: Compone
 				end
 
 				if world:contains(entityId) then
-					entityChanges[key][componentName] = {
+					entityChanges[key][tostring(component)] = {
 						data = record.new,
 					}
 				end
@@ -110,7 +111,9 @@ local function createReplicationSystem(replicatedComponents: { [string]: Compone
 				local componentsToRemove: { any } = {}
 
 				for name, container in componentMap do
-					local component = replicatedComponents[name]
+					local component = Freeze.List.find(replicatedComponents, function(other)
+						return tostring(other) == name
+					end)
 
 					if container.data then
 						table.insert(componentsToInsert, component(container.data))
