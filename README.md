@@ -1,7 +1,6 @@
 # MatterReplication
 
 [![CI](https://github.com/vocksel/matter-replication/actions/workflows/ci.yml/badge.svg)](https://github.com/vocksel/matter-replication/actions/workflows/ci.yml)
-[![Docs](https://img.shields.io/badge/docs-website-brightgreen)](https://vocksel.github.io/matter-replication)
 
 This package exposes the building blocks necessary to create replicated entities in [Matter](https://eryn.io/matter/).
 
