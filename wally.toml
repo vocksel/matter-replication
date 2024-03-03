@@ -4,7 +4,14 @@ version = "0.1.1"
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
 exclude = [ "*" ]
-include = [ "src", "src/**", "default.project.json", "README.md", "LICENSE", ]
+include = [
+	"src",
+	"src/**",
+	"default.project.json",
+	"README.md",
+	"LICENSE",
+	"wally.toml"
+]
 
 [dependencies]
 Matter = "matter-ecs/matter@0.7.1"
