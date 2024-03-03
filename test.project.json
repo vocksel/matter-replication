@@ -1,5 +1,5 @@
 {
-  "name": "MatterReplication",
+  "name": "matter-replication-test",
   "tree": {
     "$className": "DataModel",
     "ReplicatedStorage": {

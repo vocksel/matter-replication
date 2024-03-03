@@ -1,6 +1,4 @@
-local Root = script:FindFirstAncestor("MatterReplication")
-
-local Matter = require(Root.Parent.Matter)
+local Matter = require(script.Parent.Parent.Matter)
 
 export type Data = {
 	id: number,
