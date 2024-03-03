@@ -1,6 +1,5 @@
 {
   "name": "MatterReplication",
-  "emitLegacyScripts": false,
   "tree": {
     "$className": "DataModel",
     "ReplicatedStorage": {

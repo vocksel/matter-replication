@@ -16,6 +16,9 @@ default:
 build:
 	rojo build packages.project.json -o MatterReplication.rbxm
 
+build-example:
+	rojo build example/default.project.json -o MatterReplicationExample.rbxl
+
 lint:
 	selene {{ project_dir }}
 	stylua --check {{ project_dir }}

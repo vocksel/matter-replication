@@ -23,12 +23,13 @@ type EntityChanges = {
 	[string]: ComponentChanges,
 }
 
-local function createReplicationSystem(replicatedComponents: { [string]: Component })
+local function createReplicationSystem(replicatedComponents: { Component })
 	-- This table is used by the client to map server-side entity IDs to
 	-- client-side ones.
 	local clientEntityIdMap: { [string]: string } = {}
 
-	replicatedComponents = Freeze.Dictionary.set(replicatedComponents, "ServerEntity", ServerEntity)
+	replicatedComponents = table.clone(replicatedComponents)
+	table.insert(replicatedComponents, ServerEntity)
 
 	local function assignServerOwnership(world: World)
 		for _, component in replicatedComponents do
@@ -42,6 +43,8 @@ local function createReplicationSystem(replicatedComponents: { [string]: Compone
 							id = id,
 						})
 					)
+
+					-- print(`[debug] assigned server ownership to entity {id}`)
 				end
 			end
 		end
@@ -50,7 +53,7 @@ local function createReplicationSystem(replicatedComponents: { [string]: Compone
 	local function sendComponentChanges(world: World)
 		local entityChanges: EntityChanges = {}
 
-		for componentName, component in replicatedComponents do
+		for _, component in replicatedComponents do
 			for entityId, record in world:queryChanged(component) do
 				local key = tostring(entityId)
 
@@ -59,7 +62,7 @@ local function createReplicationSystem(replicatedComponents: { [string]: Compone
 				end
 
 				if world:contains(entityId) then
-					entityChanges[key][componentName] = {
+					entityChanges[key][tostring(component)] = {
 						data = record.new,
 					}
 				end
@@ -67,6 +70,7 @@ local function createReplicationSystem(replicatedComponents: { [string]: Compone
 		end
 
 		if next(entityChanges) then
+			-- print("[debug] broadcasting entity changes:", entityChanges)
 			componentReplicated:FireAllClients(entityChanges)
 		end
 	end
@@ -91,6 +95,7 @@ local function createReplicationSystem(replicatedComponents: { [string]: Compone
 				payload[tostring(entityId)] = entityPayload
 			end
 
+			-- print("[debug] new player joined, catching them up with entity changes:", payload)
 			componentReplicated:FireClient(player, payload)
 		end
 	end
@@ -103,6 +108,7 @@ local function createReplicationSystem(replicatedComponents: { [string]: Compone
 				if clientEntityId and next(componentMap) == nil then
 					world:despawn(clientEntityId)
 					clientEntityIdMap[serverEntityId] = nil
+					-- print("[debug] despawned entity", clientEntityId)
 					continue
 				end
 
@@ -110,7 +116,9 @@ local function createReplicationSystem(replicatedComponents: { [string]: Compone
 				local componentsToRemove: { any } = {}
 
 				for name, container in componentMap do
-					local component = replicatedComponents[name]
+					local component = Freeze.List.find(replicatedComponents, function(other)
+						return tostring(other) == name
+					end)
 
 					if container.data then
 						table.insert(componentsToInsert, component(container.data))
@@ -122,13 +130,16 @@ local function createReplicationSystem(replicatedComponents: { [string]: Compone
 				if clientEntityId == nil then
 					clientEntityId = world:spawn(table.unpack(componentsToInsert))
 					clientEntityIdMap[serverEntityId] = clientEntityId
+					-- print(`[debug] spawned entity {clientEntityId} with components:`, componentsToInsert)
 				else
 					if #componentsToInsert > 0 then
 						world:insert(clientEntityId, table.unpack(componentsToInsert))
+						-- print(`[debug] added components to entity {clientEntityId}:`, componentsToInsert)
 					end
 
 					if #componentsToRemove > 0 then
 						world:remove(clientEntityId, table.unpack(componentsToRemove))
+						-- print(`[debug] removed components from entity {clientEntityId}:`, componentsToInsert)
 					end
 				end
 			end
