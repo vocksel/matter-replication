@@ -3,6 +3,7 @@
 set dotenv-load
 
 project_dir := absolute_path("src")
+build_dir := absolute_path("build")
 packages_dir := absolute_path("Packages")
 test_project := "test.project.json"
 
@@ -18,6 +19,13 @@ build:
 
 build-example:
 	rojo build example/default.project.json -o MatterReplicationExample.rbxl
+
+build-package:
+	rm -rf {{ build_dir }}
+	mkdir {{ build_dir }}
+	wally package --output package.tar
+	tar -xvf package.tar -C {{ build_dir }}
+	rm package.tar
 
 lint:
 	selene {{ project_dir }}
