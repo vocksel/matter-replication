@@ -1,7 +1,6 @@
 # MatterReplication
 
 [![CI](https://github.com/vocksel/matter-replication/actions/workflows/ci.yml/badge.svg)](https://github.com/vocksel/matter-replication/actions/workflows/ci.yml)
-[![Docs](https://img.shields.io/badge/docs-website-brightgreen)](https://vocksel.github.io/matter-replication)
 
 This package exposes the building blocks necessary to create replicated entities in [Matter](https://eryn.io/matter/).
 
@@ -215,9 +214,3 @@ Get the client ID associated with a `ServerEntity`.
 The entity IDs sent to the client from the server are typically server IDs. As such, this function can be used to resolve a server ID to the client ID for an entity.
 
 For a non-replicated component there will not be a client ID to work with, so in those cases this function returns `nil`.
-
-```lua
-local MatterReplication = require(ReplicatedStorage.Packages.MatterReplication)
-
--- TODO
-```
