@@ -1,5 +1,5 @@
 {
-  "luau-lsp.sourcemap.rojoProjectFile": "default.project.json",
+  "luau-lsp.sourcemap.rojoProjectFile": "test.project.json",
   "luau-lsp.ignoreGlobs": [
     "**/_Index/**",
     "**/build/**"
